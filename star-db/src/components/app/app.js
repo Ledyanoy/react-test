@@ -7,7 +7,7 @@ import PersonDetails from "../person-details";
 import "./app.css";
 const App = () => {
   return (
-    <div>
+    <div className="app">
       <Header />
       <RandomPlanet />
 
