@@ -36,17 +36,15 @@ export default class App extends Component {
       getPerson,
       getStarship,
       getPersonImage,
-      getStarShipImage
+      getStarShipImage,
+      getAllPeople,
+      getAllPlanets
     } = this.swapiService;
 
     const personDetails = (
-      <ItemDetails
-        itemId={11}
-        getData={getPerson}
-        getImageUrl={getPersonImage}>
-        <Record field='gender' label="Gender"/>
-        <Record field='eyeColor' label="Eye Color"/>
-
+      <ItemDetails itemId={11} getData={getPerson} getImageUrl={getPersonImage}>
+        <Record field="gender" label="Gender" />
+        <Record field="eyeColor" label="Eye Color" />
       </ItemDetails>
     );
 
@@ -56,10 +54,9 @@ export default class App extends Component {
         getData={getStarship}
         getImageUrl={getStarShipImage}
       >
-        <Record field='model' label="Model"/>
-        <Record field='length' label="Length"/>
-        <Record field='costInCredits' label="Cost"/>
-
+        <Record field="model" label="Model" />
+        <Record field="length" label="Length" />
+        <Record field="costInCredits" label="Cost" />
       </ItemDetails>
     );
 
@@ -67,6 +64,10 @@ export default class App extends Component {
       <ErrorBoundary>
         <div className="app">
           <Header />
+          <ItemList getData={getAllPeople} onItemSelected={() => {}}>
+            {({ name }) => <span>{name}</span>}
+          </ItemList>
+
           <Row left={personDetails} right={starShipDetails} />
         </div>
       </ErrorBoundary>
