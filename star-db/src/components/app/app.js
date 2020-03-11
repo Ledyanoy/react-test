@@ -1,16 +1,22 @@
 import React, { Component } from "react";
 import Header from "../header";
-import ItemList from "../item-list";
 import ItemDetails, { Record } from "../item-details";
 import RandomPlanet from "../random-planet";
-import ErrorButton from "../error-button";
-import PeoplePage from "../people-page";
 import SwapiService from "../../services/swapi-service";
 import Row from "../row";
 import ErrorBoundary from "../error-boundary";
 
 import "./app.css";
 import ErrorIndicator from "../error-indicator";
+
+import {
+  PersonList,
+  PlanetList,
+  StarshipList, 
+  PersonDetails,
+  PlanetDetails,
+  StarshipDetails
+} from '../sw-components';
 
 export default class App extends Component {
   swapiService = new SwapiService();
@@ -64,9 +70,21 @@ export default class App extends Component {
       <ErrorBoundary>
         <div className="app">
           <Header />
-          <ItemList getData={getAllPeople} onItemSelected={() => {}}>
+
+          <PersonDetails itemId={11}/>
+          <PlanetDetails itemId={5}/>
+          <StarshipDetails itemId={9}/>
+          <PersonList>
             {({ name }) => <span>{name}</span>}
-          </ItemList>
+          </PersonList>
+
+          <StarshipList>
+            {({ name }) => <span>{name}</span>}
+          </StarshipList>
+
+          <PlanetList>
+            {({ name }) => <span>{name}</span>}
+          </PlanetList>
 
           <Row left={personDetails} right={starShipDetails} />
         </div>
