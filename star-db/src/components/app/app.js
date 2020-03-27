@@ -6,7 +6,11 @@ import DummySwapiService from '../../services/dummy-swapi-service';
 import ErrorBoundary from "../error-boundary";
 import {BrowserRouter as Router, Route} from 'react-router-dom';
  
-import {PeoplePage, PlanetPage, StarshipPage} from '../pages';
+import { PeoplePage,
+         PlanetPage,
+         StarshipPage,
+         LoginPage,
+         SecretPage } from '../pages';
 
 import "./app.css";
 import ErrorIndicator from "../error-indicator";
@@ -20,7 +24,14 @@ export default class App extends Component {
 
   state = {    
     hasError: false,
-    swapiService: new SwapiService()
+    swapiService: new SwapiService(),
+    isLoggedIn: false
+  };
+
+  onLogin = () => {
+    this.setState( {
+      isLoggedIn: true
+    })
   };
 
   onServiceChange =() => {
@@ -42,7 +53,9 @@ export default class App extends Component {
   render() {
     if (this.state.hasError) {
       return <ErrorIndicator />;
-    }    
+    }   
+    
+    const { isLoggedIn } = this.state;
 
     return (
       <ErrorBoundary>
@@ -53,14 +66,22 @@ export default class App extends Component {
               <RandomPlanet/>
               <Route path="/" render={()=><h2>Welcome to Star Db</h2>}
               exact={true}/>
-              <Route path="/people" component={PeoplePage} />       
+              <Route path="/people/:id?" component={PeoplePage} />       
               <Route path="/planets" component={PlanetPage} />   
               <Route path="/starships" exact component={StarshipPage} />      
               <Route path="/starships/:id" 
                 render={({match})=> {
                   const {id}= match.params;                 
                   return <StarshipDetails itemId={id}/> 
-                }} />          
+                }} />   
+              <Route path="/login" exact render={()=>(
+              <LoginPage isLoggedIn={ isLoggedIn}
+              onLogin={this.onLogin}/>
+                )}
+              />   
+              <Route path="/secret" exact render={()=>(
+              <SecretPage isLoggedIn={ isLoggedIn}/>
+                )}/>        
             </div>
           </Router>
         </SwapiServiceProvider>
